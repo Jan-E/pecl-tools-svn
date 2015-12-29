@@ -94,7 +94,11 @@ static int le_svn_fs;
 static int le_svn_fs_root;
 static int le_svn_repos_fs_txn;
 
+#if PHP_MAJOR_VERSION >= 7
+static void php_svn_repos_dtor(zend_resource *rsrc)
+#else
 static ZEND_RSRC_DTOR_FUNC(php_svn_repos_dtor)
+#endif
 {
 	struct php_svn_repos *r = rsrc->ptr;
 	/* If root pool doesn't exist, then this resource's pool was already destroyed */
@@ -104,21 +108,33 @@ static ZEND_RSRC_DTOR_FUNC(php_svn_repos_dtor)
 	efree(r);
 }
 
+#if PHP_MAJOR_VERSION >= 7
+static void php_svn_fs_dtor(zend_resource *rsrc)
+#else
 static ZEND_RSRC_DTOR_FUNC(php_svn_fs_dtor)
+#endif
 {
 	struct php_svn_fs *r = rsrc->ptr;
 	zend_list_delete(r->repos->rsrc_id);
 	efree(r);
 }
 
+#if PHP_MAJOR_VERSION >= 7
+static void php_svn_fs_root_dtor(zend_resource *rsrc)
+#else
 static ZEND_RSRC_DTOR_FUNC(php_svn_fs_root_dtor)
+#endif
 {
 	struct php_svn_fs_root *r = rsrc->ptr;
 	zend_list_delete(r->repos->rsrc_id);
 	efree(r);
 }
 
+#if PHP_MAJOR_VERSION >= 7
+static void php_svn_repos_fs_txn_dtor(zend_resource *rsrc)
+#else
 static ZEND_RSRC_DTOR_FUNC(php_svn_repos_fs_txn_dtor)
+#endif
 {
 	struct php_svn_repos_fs_txn *r = rsrc->ptr;
 	zend_list_delete(r->repos->rsrc_id);
