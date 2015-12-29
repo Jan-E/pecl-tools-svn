@@ -297,6 +297,40 @@ static enum svn_opt_revision_kind php_svn_get_revision_kind(svn_opt_revision_t r
 /* }}} */
 
 
+#if PHP_MAJOR_VERSION >= 7
+#include "ext/standard/php_smart_string.h"
+static void php_svn_handle_error(svn_error_t *error TSRMLS_DC)
+{
+	svn_error_t *itr = error;
+	smart_string s = {0,0,0};
+
+	smart_string_appendl(&s, "svn error(s) occured\n", sizeof("svn error(s) occured\n")-1);
+
+	while (itr) {
+		char buf[256];
+
+		smart_string_append_long(&s, itr->apr_err);
+		smart_string_appendl(&s, " (", 2);
+
+		svn_strerror(itr->apr_err, buf, sizeof(buf));
+		smart_string_appendl(&s, buf, strlen(buf));
+		smart_string_appendl(&s, ") ", 2);
+		if (itr->message) {
+			smart_string_appendl(&s, itr->message, strlen(itr->message));
+		}
+
+		if (itr->child) {
+			smart_string_appendl(&s, "\n", 1);
+		}
+		itr = itr->child;
+	}
+
+	smart_string_appendl(&s, "\n", 1);
+	smart_string_0(&s);
+	php_error_docref(NULL TSRMLS_CC, E_WARNING, "%s", s.c);
+	smart_string_free(&s);
+}
+#else /* PHP_MAJOR_VERSION < 7 */
 #include "ext/standard/php_smart_str.h"
 static void php_svn_handle_error(svn_error_t *error TSRMLS_DC)
 {
@@ -329,6 +363,7 @@ static void php_svn_handle_error(svn_error_t *error TSRMLS_DC)
 	php_error_docref(NULL TSRMLS_CC, E_WARNING, "%s", s.c);
 	smart_str_free(&s);
 }
+#endif
 
 static svn_error_t *php_svn_auth_ssl_client_server_trust_prompter(
 	svn_auth_cred_ssl_server_trust_t **cred,
