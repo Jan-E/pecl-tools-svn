@@ -11,7 +11,7 @@ if (PHP_SVN != "no") {
 			CHECK_LIB("libsvn_delta-1.lib", "svn", PHP_PHP_BUILD + "\\lib\\svn;" + PHP_SVN) &&
 			CHECK_LIB("libsvn_diff-1.lib", "svn", PHP_PHP_BUILD + "\\lib\\svn;" + PHP_SVN) &&
 			CHECK_LIB("libsvn_ra-1.lib", "svn", PHP_PHP_BUILD + "\\lib\\svn;" + PHP_SVN) &&
-			CHECK_LIB("libsvn_ra_dav-1.lib", "svn", PHP_PHP_BUILD + "\\lib\\svn;" + PHP_SVN) &&
+//			CHECK_LIB("libsvn_ra_dav-1.lib", "svn", PHP_PHP_BUILD + "\\lib\\svn;" + PHP_SVN) &&
 			CHECK_LIB("libsvn_ra_local-1.lib", "svn", PHP_PHP_BUILD + "\\lib\\svn;" + PHP_SVN) &&
 			CHECK_LIB("libsvn_ra_svn-1.lib", "svn", PHP_PHP_BUILD + "\\lib\\svn;" + PHP_SVN) &&
 			CHECK_LIB("libsvn_fs-1.lib", "svn", PHP_PHP_BUILD + "\\lib\\svn;" + PHP_SVN) &&
@@ -19,17 +19,17 @@ if (PHP_SVN != "no") {
 			CHECK_LIB("libsvn_fs_base-1.lib", "svn", PHP_PHP_BUILD + "\\lib\\svn;" + PHP_SVN) &&
 			CHECK_LIB("libsvn_repos-1.lib", "svn", PHP_PHP_BUILD + "\\lib\\svn;" + PHP_SVN) &&
 			CHECK_HEADER_ADD_INCLUDE("svn_client.h", "CFLAGS_SVN", PHP_PHP_BUILD + "\\include\\svn") &&
-			CHECK_HEADER_ADD_INCLUDE("libintl.h", "CFLAGS_SVN", PHP_PHP_BUILD + "\\include\\svn") &&
+//			CHECK_HEADER_ADD_INCLUDE("libintl.h", "CFLAGS_SVN", PHP_PHP_BUILD + "\\include\\svn") &&
 			CHECK_HEADER_ADD_INCLUDE("apr.h", "CFLAGS_SVN", PHP_PHP_BUILD + "\\include\\svn\\apr") &&
 			CHECK_HEADER_ADD_INCLUDE("apr_xlate.h", "CFLAGS_SVN", PHP_PHP_BUILD + "\\include\\svn\\apr-util") &&
-			CHECK_LIB("intl3_svn.lib", "svn", PHP_PHP_BUILD + "\\lib\\svn\\apr;" + PHP_SVN) &&
-			CHECK_LIB("libdb43.lib", "svn", PHP_PHP_BUILD + "\\lib\\svn\\apr;" + PHP_SVN) &&
-			CHECK_LIB("libneon.lib", "svn", PHP_PHP_BUILD + "\\lib\\svn\\neon;" + PHP_SVN) &&
-			(CHECK_LIB("libapr.lib", "svn", PHP_PHP_BUILD + "\\lib\\svn\\apr;" + PHP_SVN) ||
-				CHECK_LIB("libapr-1.lib", "svn", PHP_PHP_BUILD + "\\lib\\svn\\apr;" + PHP_SVN)) &&
-			(CHECK_LIB("libaprutil.lib", "svn", PHP_PHP_BUILD + "\\lib\\svn\\apr-util;" + PHP_SVN) ||
-				CHECK_LIB("libaprutil-1.lib", "svn", PHP_PHP_BUILD + "\\lib\\svn\\apr-util;" + PHP_SVN)) &&
-			CHECK_LIB("xml.lib", "svn", PHP_PHP_BUILD + "\\lib\\svn\\apr-util;" + PHP_SVN)
+//			CHECK_LIB("intl3_svn.lib", "svn", PHP_PHP_BUILD + "\\lib\\svn\\apr	;" + PHP_SVN) &&
+			CHECK_LIB("libdb48.lib", "svn", PHP_PHP_BUILD + "\\lib;" + PHP_SVN) &&
+//			CHECK_LIB("libneon.lib", "svn", PHP_PHP_BUILD + "\\lib;" + PHP_SVN) &&
+			(CHECK_LIB("libapr.lib", "svn", PHP_PHP_BUILD + "\\lib\\apache2_4;" + PHP_SVN) ||
+				CHECK_LIB("libapr-1.lib", "svn", PHP_PHP_BUILD + "\\lib\\apache2_4;" + PHP_SVN)) &&
+			(CHECK_LIB("libaprutil.lib", "svn", PHP_PHP_BUILD + "\\lib\\apache2_4;" + PHP_SVN) ||
+				CHECK_LIB("libaprutil-1.lib", "svn", PHP_PHP_BUILD + "\\lib\\apache2_4;" + PHP_SVN)) &&
+			CHECK_LIB("xml.lib", "svn", PHP_PHP_BUILD + "\\lib\\apache2_4;" + PHP_SVN)
 			) {
 		EXTENSION("svn", "svn.c");
 		AC_DEFINE('HAVE_SVN', 1, 'Have Subversion library');
